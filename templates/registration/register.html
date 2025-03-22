@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}註冊 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">註冊新帳號</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">電子信箱</label>
+                        <input type="email" name="email" class="form-control" id="id_email" required>
+                        <div class="form-text">我們將發送驗證郵件到此信箱</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">用戶名稱</label>
+                        <input type="text" name="username" class="form-control" id="id_username" required>
+                        <div class="form-text">請設定您想使用的用戶ID</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">密碼</label>
+                        <input type="password" name="password1" class="form-control" id="id_password1" required>
+                        <div class="form-text">密碼至少需要8個字元</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">確認密碼</label>
+                        <input type="password" name="password2" class="form-control" id="id_password2" required>
+                        <div class="form-text">請再次輸入密碼以確認</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">註冊</button>
+                    </div>
+                </form>
+                <hr>
+                <p class="text-center">已經有帳號了？ <a href="{% url 'login' %}">立即登入</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

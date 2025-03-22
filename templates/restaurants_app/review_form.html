@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}新增評論 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">新增餐廳評論</h2>
+                
+                <form method="post" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="restaurant_name" class="form-label">餐廳名稱</label>
+                        <input type="text" class="form-control" id="restaurant_name" name="restaurant_name" required>
+                        <div class="invalid-feedback">
+                            請輸入餐廳名稱
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">地址</label>
+                        <input type="text" class="form-control" id="address" name="address" required>
+                        <div class="invalid-feedback">
+                            請輸入餐廳地址
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">評分</label>
+                        <div class="rating-input">
+                            {% for i in "12345" %}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="rating" id="rating{{ i }}" value="{{ i }}" required>
+                                <label class="form-check-label" for="rating{{ i }}">
+                                    {{ i }} 星
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="invalid-feedback">
+                            請選擇評分
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="review" class="form-label">評論內容</label>
+                        <textarea class="form-control" id="review" name="review" rows="5" required></textarea>
+                        <div class="invalid-feedback">
+                            請輸入評論內容
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>發布評論
+                        </button>
+                        <a href="{% url 'review_list' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>取消
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+// 表單驗證
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}
+{% endblock %}

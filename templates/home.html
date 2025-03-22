@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-4">
+        <h1 class="display-4">歡迎使用美食評論系統</h1>
+        <p class="lead">分享您的美食體驗，探索城市中的美味</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-search fa-3x mb-3 text-primary"></i>
+                <h5 class="card-title">探索評論</h5>
+                <p class="card-text">瀏覽其他用戶分享的餐廳評論和推薦</p>
+                <a href="{% url 'review_list' %}" class="btn btn-primary">查看評論</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-edit fa-3x mb-3 text-success"></i>
+                <h5 class="card-title">分享體驗</h5>
+                <p class="card-text">分享您的用餐體驗，幫助他人發現好餐廳</p>
+                <a href="{% url 'post' %}" class="btn btn-success">寫評論</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-user fa-3x mb-3 text-info"></i>
+                <h5 class="card-title">個人中心</h5>
+                <p class="card-text">管理您的個人資料和評論記錄</p>
+                <a href="{% url 'profile' %}" class="btn btn-info text-white">前往個人中心</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if latest_reviews %}
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="mb-4">最新評論</h2>
+    </div>
+    {% for review in latest_reviews %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ review.restaurant_name }}</h5>
+                <p class="card-text">
+                    <small class="text-muted">
+                        <i class="fas fa-utensils"></i> {{ review.food_type }} | 
+                        <i class="fas fa-map-marker-alt"></i> {{ review.address }}
+                    </small>
+                </p>
+                <div class="mb-2">
+                    <div>平均評分：{{ review.average_rating|floatformat:1 }} </div>
+                    <div class="d-flex justify-content-between small">
+                        <span>口味: {{ review.taste_rating }} </span>
+                        <span>速度: {{ review.speed_rating }} </span>
+                        <span>環境: {{ review.cleanliness_rating }} </span>
+                        <span>服務: {{ review.service_rating }} </span>
+                    </div>
+                </div>
+                <p class="card-text">{{ review.review|truncatewords:30 }}</p>
+                <a href="{% url 'review_detail' review.id %}" class="btn btn-outline-primary">查看詳情</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
